@@ -145,7 +145,7 @@ def get_grid(args):
             ),  # TODO(susan): what is this -4 sorcery? relic of more nmt things?
             hyperparam("--no-save"),
         ]
-        total_updates = 50
+        total_updates = 100000000
         warmup_updates = 50
         log_interval = 5
 
@@ -162,7 +162,7 @@ def get_grid(args):
         hyperparam("--ignore-unused-valid-subsets"),
         hyperparam("--num-workers", 8),
         hyperparam("--num-workers-valid", 1),
-        hyperparam("--validate-interval-updates", 2000),
+        hyperparam("--validate-interval-updates", 50000),
         hyperparam("--save-interval-updates", 2000),
         hyperparam(
             "--no-epoch-checkpoints"
@@ -180,7 +180,7 @@ def get_grid(args):
             "fully_sharded",
             save_dir_key=lambda val: "fsdp" if not no_save_params else "",
         ),
-        hyperparam("--no-reshard-after-forward", save_dir_key=lambda _: "zero2"),
+        # hyperparam("--no-reshard-after-forward", save_dir_key=lambda _: "zero2"),
         hyperparam("--use-sharded-state"),
         hyperparam("--checkpoint-activations"),
         hyperparam("--model-parallel-size", size.model_parallel),
